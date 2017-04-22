@@ -21,6 +21,7 @@ import com.coolweather.android.util.HttpUtil;
 import com.coolweather.android.util.Utility;
 
 import org.litepal.crud.DataSupport;
+import org.litepal.tablemanager.Connector;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -112,6 +113,8 @@ public class ChooseAreaFragment extends Fragment {
                 }
             }
         });
+       // Connector.getDatabase();
+        queryProvince();
     }
 
     /**
