@@ -24,6 +24,7 @@ import com.coolweather.android.gson.Basic;
 import com.coolweather.android.gson.Daily_forecast;
 import com.coolweather.android.gson.Suggestion;
 import com.coolweather.android.gson.Weather;
+import com.coolweather.android.service.AutoUpdateService;
 import com.coolweather.android.util.HttpUtil;
 import com.coolweather.android.util.Utility;
 
@@ -152,6 +153,7 @@ public class WeatherActivity extends AppCompatActivity {
                             editor.putString("weather" , responseText);
                             editor.apply();
                             showWeatherInfo(weather);
+
                         }else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
@@ -166,6 +168,7 @@ public class WeatherActivity extends AppCompatActivity {
      * 处理并展示Weather实体类中的数据
      */
     private void showWeatherInfo(Weather weather){
+
         String cityName = weather.basic.cityName;
         String updateTime = weather.basic.update.locTime.split(" ")[1];
         String degree = weather.now.tmp + "℃";
@@ -199,6 +202,10 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
+        if (weather != null && "ok".equals(weather.status)){
+            Intent intent = new Intent(this , AutoUpdateService.class);
+            startService(intent);
+        }
     }
 
     /**
